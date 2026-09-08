@@ -1,0 +1,22 @@
+import cors from "cors";
+import express from "express";
+import authRoutes from "./routes/authRoutes.js";
+import detectionRoutes from "./routes/detectionRoutes.js";
+import safetyRoutes from "./routes/safetyRoutes.js";
+import workerRoutes from "./routes/workerRoutes.js";
+import alertRoutes from "./routes/alertRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
+
+const app = express();
+const port = process.env.PORT || 8001;
+app.use(cors());
+app.use(express.json());
+app.get("/health", (_request, response) => response.json({ status: "healthy", service: "BuildSure AI Node API" }));
+app.use("/api/auth", authRoutes);
+app.use("/api/detection", detectionRoutes);
+app.use("/api/safety", safetyRoutes);
+app.use("/api/workers", workerRoutes);
+app.use("/api/alerts", alertRoutes);
+app.use("/api/analytics", analyticsRoutes);
+app.listen(port, () => console.log(`BuildSure AI Node API listening on port ${port}`));
+export default app;

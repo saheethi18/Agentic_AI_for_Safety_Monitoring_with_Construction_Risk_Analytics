@@ -1,0 +1,1 @@
+export function getOpenAlerts() { return [{ id: "A-001", title: "Missing eye protection", severity: "high", status: "open" }, { id: "A-002", title: "Vehicle proximity", severity: "critical", status: "open" }]; }
