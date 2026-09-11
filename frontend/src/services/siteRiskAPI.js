@@ -1,99 +1,65 @@
-const API_BASE_URL =
-  "http://localhost:8000";
+// frontend/src/api/siteRiskAPI.js
 
+const API_BASE_URL = "http://localhost:8000";
 
 export const getDatasetSummary = async () => {
-  const response = await fetch(
-    `${API_BASE_URL}/dataset/summary`
-  );
+  const response = await fetch(`${API_BASE_URL}/dataset/summary`);
 
   if (!response.ok) {
-    throw new Error(
-      `Failed to fetch dataset summary: ${response.status}`
-    );
+    throw new Error(`Failed to fetch dataset summary: ${response.status}`);
   }
 
-  return await response.json();
+  return response.json();
 };
 
-
-export const getSiteRisk = async (
-  projectId = "P001"
-) => {
-
+export const getSiteRisk = async (projectId = "P001") => {
   const response = await fetch(
     `${API_BASE_URL}/site-risk/${projectId}`
   );
 
   if (!response.ok) {
-
-    throw new Error(
-      `Failed to fetch site risk: ${response.status}`
-    );
-
+    throw new Error(`Failed to fetch site risk: ${response.status}`);
   }
 
-  return await response.json();
+  return response.json();
 };
 
-
-export const analyzeSiteRisk = async (
-  siteData
-) => {
-
+export const analyzeSiteRisk = async (siteData) => {
   const response = await fetch(
     `${API_BASE_URL}/site-risk/analyze`,
     {
       method: "POST",
-
       headers: {
-        "Content-Type":
-          "application/json"
+        "Content-Type": "application/json",
       },
-
-      body: JSON.stringify(siteData)
+      body: JSON.stringify(siteData),
     }
   );
 
-
   if (!response.ok) {
-
     throw new Error(
       `Site risk analysis failed: ${response.status}`
     );
-
   }
 
-  return await response.json();
+  return response.json();
 };
 
-
-export const checkBackendStatus =
-  async () => {
-
-    try {
-
-      const response = await fetch(
-        `${API_BASE_URL}/health`
-      );
-
-      return response.ok;
-
-    } catch {
-
-      return false;
-
-    }
-
-  };
-
+export const checkBackendStatus = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    return response.ok;
+  } catch (error) {
+    console.error("Backend connection error:", error);
+    return false;
+  }
+};
 
 const siteRiskAPI = {
+  getDatasetSummary,
   getSiteRisk,
   analyzeSiteRisk,
   checkBackendStatus,
-  getDatasetSummary
 };
-
 
 export default siteRiskAPI;
